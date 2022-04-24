@@ -25,14 +25,14 @@ class ChatServer(object):
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server.bind(('',port))
-        print 'Listening to port',port,'...'
+        print('Listening to port',port,'...')
         self.server.listen(backlog)
         # Trap keyboard interrupts
         signal.signal(signal.SIGINT, self.sighandler)
         
     def sighandler(self, signum, frame):
         # Close the server
-        print 'Shutting down server...'
+        print('Shutting down server...')
         # Close existing client sockets
         for o in self.outputs:
             o.close()
@@ -66,7 +66,7 @@ class ChatServer(object):
                 if s == self.server:
                     # handle the server socket
                     client, address = self.server.accept()
-                    print 'chatserver: got connection %d from %s' % (client.fileno(), address)
+                    print('chatserver: got connection %d from %s' % (client.fileno(), address))
                     # Read the login name
                     cname = receive(client).split('NAME: ')[1]
                     
@@ -102,7 +102,7 @@ class ChatServer(object):
                                     # o.send(msg)
                                     send(o, msg)
                         else:
-                            print 'chatserver: %d hung up' % s.fileno()
+                            print('chatserver: %d hung up' % s.fileno())
                             self.clients -= 1
                             s.close()
                             inputs.remove(s)
