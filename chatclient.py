@@ -27,7 +27,7 @@ class ChatClient(object):
         try:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock.connect((host, self.port))
-            print 'Connected to chat server@%d' % self.port
+            print('Connected to chat server@%d' % self.port)
             # Send my name...
             send(self.sock,'NAME: ' + self.name) 
             data = receive(self.sock)
@@ -35,7 +35,7 @@ class ChatClient(object):
             addr = data.split('CLIENT: ')[1]
             self.prompt = '[' + '@'.join((self.name, addr)) + ']> '
         except socket.error, e:
-            print 'Could not connect to chat server @%d' % self.port
+            print('Could not connect to chat server @%d' % self.port)
             sys.exit(1)
 
     def cmdloop(self):
@@ -55,7 +55,7 @@ class ChatClient(object):
                     elif i == self.sock:
                         data = receive(self.sock)
                         if not data:
-                            print 'Shutting down.'
+                            print('Shutting down.')
                             self.flag = True
                             break
                         else:
@@ -63,7 +63,7 @@ class ChatClient(object):
                             sys.stdout.flush()
                             
             except KeyboardInterrupt:
-                print 'Interrupted.'
+                print('Interrupted.')
                 self.sock.close()
                 break
             
